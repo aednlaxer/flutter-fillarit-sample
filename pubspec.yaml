@@ -1,0 +1,39 @@
+name: Fillarit
+description: Flutter Fillarit sample app
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+  google_maps_flutter: ^0.5.11
+  http: ^0.12.0+2
+  permission_handler: '2.1.2'
+  flutter_launcher_icons: "^0.7.0"
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter_icons:
+  android: true
+  adaptive_icon_background: "#FCBC19"
+  adaptive_icon_foreground: "assets/ic_app_icon.png" 
+  ios: false
+  image_path: "assets/ic_app_icon.png"
+
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/ic_some_bikes.png
+    - assets/ic_no_bikes.png
+    - assets/ic_app_icon.png
