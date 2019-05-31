@@ -37,6 +37,8 @@ class FillaritHomePage extends StatefulWidget {
   State<FillaritHomePage> createState() => FillaritHomePageState();
 }
 
+PermissionHandler permissionHandler = PermissionHandler();
+
 class FillaritHomePageState extends State<FillaritHomePage> {
   Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers = Set();
@@ -73,14 +75,24 @@ class FillaritHomePageState extends State<FillaritHomePage> {
   }
 
   Future _requestPermissions() async {
-    final Map<PermissionGroup, PermissionStatus> permissions =
-        await PermissionHandler()
-            .requestPermissions([PermissionGroup.location]);
-    print(permissions);
-    if (permissions.containsKey(PermissionGroup.location)) {
+    final PermissionStatus locationPersmissionStatus = await permissionHandler.checkPermissionStatus(PermissionGroup.location);
+    print('location permission status: $locationPersmissionStatus');
+    if (locationPersmissionStatus == PermissionStatus.denied ||
+        locationPersmissionStatus == PermissionStatus.disabled ||
+        locationPersmissionStatus == PermissionStatus.restricted) {
+      // TODO: Prompt user to open settings and update the denied/disabled/restricted permission
+      // https://pub.dev/packages/permission_handler#open-app-settings
+      // bool isOpened = await PermissionHandler().openAppSettings();
+    } else if (locationPersmissionStatus == PermissionStatus.unknown) {
+      var permissions = await permissionHandler.requestPermissions([PermissionGroup.location]);
+      if (permissions.containsKey(PermissionGroup.location)) {
+        setState(() {
+          _myLocationEnabled = true;
+        });
+      }
+    } else {
       setState(() {
-        _myLocationEnabled =
-            permissions[PermissionGroup.location] == PermissionStatus.granted;
+        _myLocationEnabled = true;
       });
     }
   }
