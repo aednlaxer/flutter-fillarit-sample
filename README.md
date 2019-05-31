@@ -3,6 +3,7 @@
 Show citybike stations on the map with Flutter
 
 Don't forget to provide Google Maps API key.
+Get an API key at [https://cloud.google.com/maps-platform/](https://cloud.google.com/maps-platform/).
 
 At `ios/Runner/AppDelegate.m`
 ```
