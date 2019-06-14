@@ -34,6 +34,16 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/ic_some_bikes.png
-    - assets/ic_no_bikes.png
     - assets/ic_app_icon.png
+    - assets/ic_no_bikes.png
+    - assets/ic_1_bikes.png
+    - assets/ic_2_bikes.png
+    - assets/ic_3_bikes.png
+    - assets/ic_4_bikes.png
+    - assets/ic_5_bikes.png
+    - assets/ic_6_bikes.png
+    - assets/ic_7_bikes.png
+    - assets/ic_8_bikes.png
+    - assets/ic_9_bikes.png
+    - assets/ic_10_bikes.png
+    - assets/ic_many_bikes.png

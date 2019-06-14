@@ -1,11 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import 'package:permission_handler/permission_handler.dart';
 
 void main() => runApp(MyApp());
@@ -75,7 +74,8 @@ class FillaritHomePageState extends State<FillaritHomePage> {
   }
 
   Future _requestPermissions() async {
-    final PermissionStatus locationPersmissionStatus = await permissionHandler.checkPermissionStatus(PermissionGroup.location);
+    final PermissionStatus locationPersmissionStatus =
+        await permissionHandler.checkPermissionStatus(PermissionGroup.location);
     print('location permission status: $locationPersmissionStatus');
     if (locationPersmissionStatus == PermissionStatus.denied ||
         locationPersmissionStatus == PermissionStatus.disabled ||
@@ -84,7 +84,8 @@ class FillaritHomePageState extends State<FillaritHomePage> {
       // https://pub.dev/packages/permission_handler#open-app-settings
       // bool isOpened = await PermissionHandler().openAppSettings();
     } else if (locationPersmissionStatus == PermissionStatus.unknown) {
-      var permissions = await permissionHandler.requestPermissions([PermissionGroup.location]);
+      var permissions = await permissionHandler
+          .requestPermissions([PermissionGroup.location]);
       if (permissions.containsKey(PermissionGroup.location)) {
         setState(() {
           _myLocationEnabled = true;
@@ -115,9 +116,34 @@ class FillaritHomePageState extends State<FillaritHomePage> {
   }
 
   Future<BitmapDescriptor> _getMarkerIcon(int bikes) {
-    // TODO show number of available bikes
-    final assetName =
-        bikes > 0 ? "assets/ic_some_bikes.png" : "assets/ic_no_bikes.png";
+    String assetName;
+
+    print("Foo $bikes");
+    if (bikes < 0) {
+      assetName = "assets/ic_no_bikes.png";
+    } else {
+      switch (bikes) {
+        case 0:
+          assetName = "assets/ic_no_bikes.png";
+          break;
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+          assetName = "assets/ic_${bikes.abs()}_bikes.png";
+          break;
+        default:
+          assetName = "assets/ic_many_bikes.png";
+          break;
+      }
+    }
+
     return BitmapDescriptor.fromAssetImage(ImageConfiguration(), assetName);
   }
 
